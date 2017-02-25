@@ -1,6 +1,7 @@
 import os
 import os.path
-import datetime, operator as oper
+import datetime, time
+from operator import attrgetter, itemgetter
 
 
 class Customer(object):
@@ -337,12 +338,15 @@ class Travels(object):
         ListByTime = []
         while c is not None:
             date = c.date.split('.')
-            if datetime.date(int(date[0]), int(date[1]), int(date[2])) > datetime.date(int(date1[0]), int(date1[1]), int(date1[2])) and datetime.date(int(date[0]), int(date[1]), int(date[2])) < datetime.date(int(date2[0]), int(date2[1]), int(date2[2])):
-                print(c.date)
-                ListByTime.append(c)
-                c = c.next
+            if customerId == c.customerId:
+                if datetime.date(int(date[0]), int(date[1]), int(date[2])) > datetime.date(int(date1[0]), int(date1[1]), int(date1[2])) and datetime.date(int(date[0]), int(date[1]), int(date[2])) < datetime.date(int(date2[0]), int(date2[1]), int(date2[2])):
+                    ListByTime.append(c)
+                    c = c.next
+                else:
+                    c = c.next
             else:
                 c = c.next
+        ListByTime.sort(key=attrgetter('date', 'time'))
         return ListByTime
 
 
@@ -364,10 +368,8 @@ class Travels(object):
                         d = d.right
             else:
                 c = c.next
-        k = oper.attrgetter('name')
-        sorted(ListByDriver, key=k)
+        ListByDriver.sort(key=attrgetter('name'))
         return ListByDriver
-
 
 
 
