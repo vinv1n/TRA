@@ -245,20 +245,8 @@ class Drivers(object):
         if c is None:
             return False
 
-    ##def findByName(self, name, tree1):
-        #c = tree1.root
-        #d = self.head
-        #while c is not None:
-           # if c.name == name:
-          #      return c
-         #   else:
-        #        c = c.left
-        #while True:
-          #  if c.name == name:
-         #       return c
-        #    else:
-                #c = c.right
-      ##      print("Tällä nimellä ei löytynyt kuljettajaa")
+    def findByName(self, name, tree1):
+        pass
 
     # extra methods that you might need
     def methodName(self, pars):
@@ -276,17 +264,18 @@ class Travels(object):
 
         f = open('travels.txt', 'r')
         c = None
+        list1 = []
         for line in f.readlines():
             lineparts = line.replace('\n', '').split('\t')
             if len(lineparts) > 1:
-                if len(lineparts) is not 8:
-                    s = (lineparts[2]).split(' ')  # muokataan listasta luettava poistamalla väli
+                if len(lineparts) is not 8:         #tapaus, jossa aijan ja päivämäärän välillä ei tabiä
+                    s = (lineparts[2]).split(' ')   # muokataan listasta luettava poistamalla väli, koska ajan ja päivän välissä space eikä tabi
                     lineparts.pop(2)
                     kiki = s[0]
                     nakki = s[1]
                     lineparts.insert(2, kiki)
                     lineparts.insert(3, nakki)
-                    if self.head == None:
+                    if self.head is None:
                         self.head = Travel(id=int(lineparts[0]), driverId=int(lineparts[1]), date=lineparts[2],
                                            time=lineparts[3],
                                            customerId=int(lineparts[4]), source=lineparts[5], destination=lineparts[6],
@@ -298,7 +287,7 @@ class Travels(object):
                                         customerId=int(lineparts[4]), source=lineparts[5], destination=lineparts[6],
                                         amount=float(lineparts[7]))
                         c = c.next
-                elif self.head == None:
+                elif self.head == None: #tapaus, jossa päivämäärä ja aika erotettu tabillä
                     self.head = Travel(id=int(lineparts[0]), driverId=int(lineparts[1]), date=lineparts[2],
                                        time=lineparts[3],
                                        customerId=int(lineparts[4]), source=lineparts[5], destination=lineparts[6],
@@ -386,5 +375,35 @@ class Travels(object):
         f.close()
 
 
-    def add(self, list,  act):
-        pass
+    def add(self, list1, action4, tri, kohde): #pidetään muuttujat samana, koska helpoompi muistaa
+        if action4 == 1:
+            for p in range(len(list1)):
+                if list1[p].id == tri:
+                    list1.pop(p)
+                    list1.sort(key=attrgetter('date'))
+                    return list1
+            if p > len(list1):
+                print('Muutoksia ei tehty')
+                return list1
+        elif action4 == 2:
+            if kohde is not None:
+                list1.append(kohde)
+                list1.sort(key=attrgetter('date'))
+                return list1
+        elif action4 == 3:
+            for f in range(len(list1)):
+                if tri == list1[f].id:
+                    return list1[f]
+            if f > len(list1):
+                return False
+        else:
+            print('Annoit väärän arvon!')
+            time.sleep(2)
+
+    def create(self):
+        c = self.head
+        list1 = []
+        while c is not None:
+            list1.append(c)
+            c = c.next
+        return list1

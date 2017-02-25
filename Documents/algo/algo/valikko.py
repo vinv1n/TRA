@@ -1,11 +1,22 @@
 import time
 from Classes import Agency, Agencies, Customer, Customers, Drivers, Driver, Travels, Travel
 
+def alustus(): #saadaan siististi globaaleja muuttujia
+    tr = Travels()
+    tr.Load()
+    list1 = tr.create()
+    ag = Agencies()
+    ag.Load()
+    dr = Drivers()
+    tree1 = dr.Load()
+    return list1, tree1, ag, tr, dr
+
 
 def menu():
+    list1, tree1, ag, tr, dr = alustus()
     k = True
     while k is True:
-        print('Valinnta:\n'
+        print('Valinta:\n'
               '\t1: Etsi Matkatoimisto\n'
               '\t2: Etsi Kuljettaja\n'
               '\t3: Etsi matka\n'
@@ -17,8 +28,6 @@ def menu():
             print('Anna valinta numerona!')
         else:
             if action is 1:
-                ag = Agencies()
-                ag.Load()
                 print('Etsitäänkö matkatoimisto:\n'
                       '\t1: Nimellä\n'
                       '\t2: Idllä\n')
@@ -47,8 +56,6 @@ def menu():
                                 print(d.name, d.id, d.staffCount,
                                       d.regDate, d.managerName)
             elif action is 2:
-                dr = Drivers()
-                tree1 = dr.Load()
                 print('Etsitäänkö kuljettaja:\n'
                       '\t1: Nimellä\n'
                       '\t2: Id:llä\n')
@@ -76,8 +83,6 @@ def menu():
                             else:
                                 print(d.id, d.name, d.hireDate, d.officeid, d.carModel)
             elif action == 3:
-                tr = Travels()
-                tr.Load()
                 print('Etsitäänkö matkoja:\n'
                       '\t1: Asiakkaan mukaan tietyllä aikavälillä\n'
                       '\t2: Tietyn asiakkaan saamat palvelut aikavälillä\n'
@@ -124,31 +129,47 @@ def menu():
                         except ValueError:
                             print('Syötä luku')
                         else:
-                            dr = Drivers()
-                            tre = dr.Load()
-                            f = tr.findDriver(t, tre)
+                            f = tr.findDriver(t, tree1)
                             if len(f) == 0:
                                 print('ei löytynyt')
                             else:
                                 for l in range(0, len(f)):
                                     print('\t', f[l].id, f[l].officeid, f[l].name, f[l].hireDate, f[l].carModel, '\n')
-            elif action == 4:  # tr.add lisä ominaisuus kirjoittaa syötetyt tiedot travels.txt:n loppuun, muuten lukee listatsta
-                print('Valitse toiminto:'
-                      '1: Poista'
-                      '2: Lisää')
-                print('Valitse lista: ')
-                print('1: Ajan mukaan listatusta\n'
-                      '2: Asiakkaan mukaan listatuista\n'
-                      '3: Kuljettajan mukaan listatuista\n')
+            elif action == 4:  # tr.add1 lisä ominaisuus kirjoittaa syötetyt tiedot travels.txt:n loppuun, muuten lukee listatsta
+                print('Valitse toiminto:\n'
+                      '1: Poista\n'
+                      '2: Lisää\n'
+                      '3: Etsi')
                 try:
-                    action4 = int(input('Poistetaanko(1) vai lisätäänkö(2) listata?'))
-                    act = int(input('Mihin listaan toiminto suoritetaan?'))
+                    action4 = int(input(': ').strip())
+                    tri = int(input('Syötä matkan tunnus:').strip()) #etsiminen rajoitettu tunnukseen voisi periaatteessa olla mikä tahansa mutta olisi epätarkka
                 except ValueError:
                     print('Valintaa tehdään numeroilla!')
                     time.sleep(2)
                 else:
-                    tr
-
+                    if action4 == 1:
+                       ty = tr.add(list1, action4, tri, kohde=None)
+                       if ty is False:
+                           print('Matkaa ei löytynyt!')
+                           time.sleep(2)
+                       else:
+                           print('Matka poistettiin')
+                    elif action4 == 2:
+                        print('Anna loput tiedot:')
+                        print('Insert driverId, date, time, customerId, source, destination, amount, in specific order and separeted by pilkku')
+                        rt = input(': ').strip()
+                        rt = rt.split(',')
+                        print(len(rt))
+                        if len(rt) != 7:
+                            print('Tapahtui virhe!')
+                        else:
+                            kohde = Travel(tri, int(rt[0]), rt[1], rt[2], int(rt[3]), rt[4], rt[5], float(rt[6]))
+                            tr.add(list1, action4, tri, kohde)
+                            print(len(list1))
+                    elif action4 == 3:
+                        tr.add(action4, list1, tri, kohde=None)
+                    else:
+                        print('Virheellinen syöte')
             elif action == 5:
                 print('Lopeta peli kirjoittamalla q/quit tai jatka kirjoittamalla n/no\n')
                 a = str(input('Do you really want to quit:').lower())
