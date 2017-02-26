@@ -7,21 +7,24 @@ def alustus(): #saadaan siististi globaaleja muuttujia
     list1 = tr.create()
     ag = Agencies()
     ag.Load()
+    cu = Customers()
+    tree = cu.Load()
     dr = Drivers()
     tree1 = dr.Load()
-    return list1, tree1, ag, tr, dr
+    return list1, tree1, ag, tr, dr, tree, cu
 
 
 def menu():
-    list1, tree1, ag, tr, dr = alustus()
+    list1, tree1, ag, tr, dr, tree, cu = alustus()
     k = True
     while k is True:
         print('Valinta:\n'
               '\t1: Etsi Matkatoimisto\n'
               '\t2: Etsi Kuljettaja\n'
               '\t3: Etsi matka\n'
-              '\t4: Lisää\poista matka\n'
-              '\t5: Lopeta\n')
+              '\t4: Etsi Asiakas\n'
+              '\t5: Lisää\poista matka\n'
+              '\t6: Lopeta\n')
         try:
             action = int(input('Minä toiminnon valitset?(Anna valinta numerona): '))
         except ValueError:
@@ -66,8 +69,8 @@ def menu():
                 else:
                     if action2 is 1:
                         name = input('Syötä nimi: ').strip().title()
-                        dr = dr.findByName(name)
-                        if a is False:
+                        a = dr.findByName(tree1, name)
+                        if a is None:
                             print('Nimellä ei löytynyt kuljettajaa')
                         else:
                             print(a.name, a.id, a.staffCount, a.regDate, a.managerName)
@@ -135,7 +138,37 @@ def menu():
                             else:
                                 for l in range(0, len(f)):
                                     print('\t', f[l].id, f[l].officeid, f[l].name, f[l].hireDate, f[l].carModel, '\n')
-            elif action == 4:  # tr.add1 lisä ominaisuus kirjoittaa syötetyt tiedot travels.txt:n loppuun, muuten lukee listatsta
+            elif action == 4:
+                print('Etsitäänkö Asiakasta:\n'
+                      '\t1: Nimen perusteella\n'
+                      '\t2: Idn peristeella\n')
+                try:
+                    action6 = int(input('Valinta:').strip())
+                except ValueError:
+                    print('Valinta kokonaislukuna!')
+                else:
+                    if action6 == 1:
+                        nimi = input('Syötä asiakkaan nimi:').strip()
+                        data = cu.findByName(tree.root, nimi)
+                        if data is None:
+                            print('Nimellä ei löytynyt asiakasta')
+                        else:
+                            print(data.id, data.name, data.address, data.phone)
+                    elif action6 == 2:
+                        try:
+                            id2 = int(input('Syötä asiakkaan id:').strip())
+                        except ValueError:
+                            print('Anna id lukuna!')
+                        else:
+                            h = findById(id2, tree.root)
+                            if h is None:
+                                print('Idllä ei löytynyt asiakasta')
+                            else:
+                                print(h.id, h.name, h.address, h.phone)
+                    else:
+                        print('Syötä luku, joka on pienempi tai yhtäsuuri kuin 2')
+                        time.sleep(2)
+            elif action == 5:  # tr.add1 lisä ominaisuus kirjoittaa syötetyt tiedot travels.txt:n loppuun, muuten lukee listatsta
                 print('Valitse toiminto:\n'
                       '1: Poista\n'
                       '2: Lisää\n'
@@ -170,7 +203,7 @@ def menu():
                         tr.add(action4, list1, tri, kohde=None)
                     else:
                         print('Virheellinen syöte')
-            elif action == 5:
+            elif action == 6:
                 print('Lopeta peli kirjoittamalla q/quit tai jatka kirjoittamalla n/no\n')
                 a = str(input('Do you really want to quit:').lower())
                 if a == 'q' or a == 'quit':

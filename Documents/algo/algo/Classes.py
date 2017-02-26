@@ -129,7 +129,6 @@ class Agencies(object):
             else:
                 c = c.next
         if c is None:
-            print('l')
             return False
 
     # extra methods that you might need
@@ -175,12 +174,12 @@ class Customers(object):
 
     # Implement
 
-    def findById(self, id, tree):
+    def findById(self, id2, tree):
         c = tree.root
         while c is not None:
-            if id < c.id:
+            if id2 < c.id:
                 c = c.left
-            elif id == c.id:
+            elif id2 == c.id:
                 return c.data
             else:
                 c = c.right
@@ -188,10 +187,10 @@ class Customers(object):
 
 
 
-    def findByName(self, tree, name):
-        c = tree.root
-        while c is not None:
-            pass
+    def findByName(self, tree, nimi):
+        pass
+
+
 
             
 
@@ -247,11 +246,6 @@ class Drivers(object):
 
     def findByName(self, name, tree1):
         pass
-
-    # extra methods that you might need
-    def methodName(self, pars):
-        pass
-
 
 class Travels(object):
     def __init__(self):
