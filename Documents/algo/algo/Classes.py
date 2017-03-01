@@ -5,11 +5,12 @@ from operator import attrgetter, itemgetter
 
 
 class Customer(object):
-    def __init__(self, id=0, name='', address='', phone=''):
+    def __init__(self, id=0, name='', address='', phone='', answer=None):
         self.id = id
         self.name = name.replace('\t', '')
         self.address = address.replace('\t', '')
         self.phone = phone.replace('\t', '')
+        self.answer = answer
         self.next = None
 
 
@@ -124,12 +125,10 @@ class Agencies(object):
     def findByName(self, name):
         c = self.head
         while c is not None:
-            if c.name is name:
+            if c.name == name:
                 return c
             else:
                 c = c.next
-        if c is None:
-            return False
 
     # extra methods that you might need
     def methodName(self, pars):
@@ -187,12 +186,18 @@ class Customers(object):
 
 
 
-    def findByName(self, tree, nimi):
-        pass
+    def findByName(self, nimi, c):
+        while c is not None:
+            if c.data.name == nimi:
+                print('oikea!')
+                time.sleep(2)
+                self.answer = c.data
+            else:
+                self.findByName(nimi, c.left)
+                self.findByName(nimi, c.right)
 
 
 
-            
 
 class Drivers(object):
     def __init__(self):
@@ -245,7 +250,10 @@ class Drivers(object):
             return False
 
     def findByName(self, name, tree1):
+        #c = tree1.root
+        #while c is not None:
         pass
+
 
 class Travels(object):
     def __init__(self):

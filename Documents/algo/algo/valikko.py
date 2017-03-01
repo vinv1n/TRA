@@ -42,7 +42,7 @@ def menu():
                     if action1 is 1:
                         name = input('Syötä nimi: ').strip().title()
                         a = ag.findByName(name)
-                        if a is False:
+                        if a is None:
                             print('Nimellä ei löytynyt toimistoa')
                         else:
                             print(a.name, a.id, a.staffCount, a.regDate, a.managerName)
@@ -81,7 +81,7 @@ def menu():
                             print('Id:n täytyy olla luku!')
                         else:
                             d = dr.findById(id, tree1)
-                            if d is False:
+                            if d is None:
                                 print('Idllä ei löytynyt kuljettajaa!')
                             else:
                                 print(d.id, d.name, d.hireDate, d.officeid, d.carModel)
@@ -148,8 +148,8 @@ def menu():
                     print('Valinta kokonaislukuna!')
                 else:
                     if action6 == 1:
-                        nimi = input('Syötä asiakkaan nimi:').strip()
-                        data = cu.findByName(tree.root, nimi)
+                        nimi6 = input('Syötä asiakkaan nimi:').strip()
+                        data = cu.findByName(nimi6, tree.root)
                         if data is None:
                             print('Nimellä ei löytynyt asiakasta')
                         else:
@@ -160,7 +160,7 @@ def menu():
                         except ValueError:
                             print('Anna id lukuna!')
                         else:
-                            h = findById(id2, tree.root)
+                            h = cu.findById(id2, tree)
                             if h is None:
                                 print('Idllä ei löytynyt asiakasta')
                             else:
