@@ -111,7 +111,7 @@ def menu():
                         except ValueError:
                             print('Id:n täytyy olla luku!')
                         else:
-                            for j in range(0, 5):  # for looppi jotta ei tarvitse tehdä erillistä postumista
+                            for j in range(0, 5):  # for looppi jotta ei tarvitse tehdä erillistä postumista == väkerrys josta ei käytännön hyötyä
                                 date1 = input('Syötä aloitus päivämäärä . erotettuna muodossa vv.kk.pp: ').split('.')
                                 date2 = input('Syötä aloitus lopetus päivämäärä . erotettu vv.kk.pp: ').split('.')
                                 if len(date1) and len(date2) is not 3:
@@ -125,7 +125,7 @@ def menu():
                                             print('\t', d[i].id, d[i].driverId, d[i].date,
                                                   d[i].time, d[i].customerId, d[i].source,
                                                   d[i].destination, d[i].amount, '\n')
-                            print('Syötit liian monesti väärin palataan alkuun')
+                                        break
                     elif action3 == 3:
                         try:
                             t = int(input('Syötä asiakkaan tunnus:').strip())
