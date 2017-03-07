@@ -148,7 +148,7 @@ def menu():
                     print('Valinta kokonaislukuna!')
                 else:
                     if action6 == 1:
-                        nimi6 = input('Syötä asiakkaan nimi:').strip()
+                        nimi6 = input('Syötä asiakkaan nimi:').strip().title()      #saataa olla lisää samoja virheitä, koska Customer#1 != customer#1
                         data66 = cu.findByName(nimi6, tree)
                         if data66 is None:
                             print('Nimellä ei löytynyt asiakasta')
@@ -210,9 +210,17 @@ def menu():
                     k = False
                 elif a == 'n' or a == 'no':
                     print('Ohjelma looppaa')
-                    for f in range(0, 4):
-                        print('#' * (f + 1), '.' * (3 - f))
-                        time.sleep(1 / 2)
+                    for f in range(0, 10):
+                        if f == 4:
+                            print('#'* f, '-_-', '.' * (10 - f))
+                        elif f == 7:
+                            print('#' * 4, '-_-', '#' * (f - 3), '.' * (10 - f))
+                            print('ei enää pliis')
+                        elif f > 4:
+                            print('#'*4, '-_-', '#'*(f-4), '.'*(10-f))
+                        else:
+                            print('#' * (f + 1), '.' * (10 - f))
+                        time.sleep(1)
             else:
                 print('rip, yritä uudestaan')
                 time.sleep(2)

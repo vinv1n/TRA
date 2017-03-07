@@ -74,6 +74,7 @@ class Node(object):
     def find(self, nimi):           #rekursiivinen haku ilman key:tä
         if self.data.name == nimi:
             apu.answer = self.data
+            print('hep')
         else:
             if self.left and self.right is not None:
                 self.right.find(nimi), self.left.find(nimi)
@@ -268,7 +269,7 @@ class Drivers(object):
             return False
 
     def findByName(self, c, nimi):
-        apu.answer = None  # sama funktio kutsu kuin aiemmin
+        apu.answer = None  # sama kuin aikaisemmin
         c.find(nimi)
         if apu.answer:
             return apu.answer
