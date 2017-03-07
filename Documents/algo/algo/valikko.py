@@ -58,7 +58,7 @@ def menu():
                             else:
                                 print(d.name, d.id, d.staffCount,
                                       d.regDate, d.managerName)
-            elif action is 2:
+            elif action == 2:
                 print('Etsitäänkö kuljettaja:\n'
                       '\t1: Nimellä\n'
                       '\t2: Id:llä\n')
@@ -73,14 +73,14 @@ def menu():
                         if a is None:
                             print('Nimellä ei löytynyt kuljettajaa')
                         else:
-                            print(a.name, a.id, a.staffCount, a.regDate, a.managerName)
+                            print(a.id, a.officeid,  a.name, a.hireDate, a.carModel)
                     elif action2 is 2:
                         try:
-                            id = int(input('Syötä Id lukuna: '))
+                            id7 = int(input('Syötä Id lukuna: '))
                         except ValueError:
                             print('Id:n täytyy olla luku!')
                         else:
-                            d = dr.findById(id, tree1)
+                            d = dr.findById(id7, tree1)
                             if d is None:
                                 print('Idllä ei löytynyt kuljettajaa!')
                             else:

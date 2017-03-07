@@ -5,12 +5,11 @@ from operator import attrgetter
 
 
 class Customer(object):
-    def __init__(self, id=0, name='', address='', phone='', answer=None):
+    def __init__(self, id=0, name='', address='', phone=''):
         self.id = id
         self.name = name.replace('\t', '')
         self.address = address.replace('\t', '')
         self.phone = phone.replace('\t', '')
-        self.answer = answer
         self.next = None
 
 
@@ -22,6 +21,11 @@ class Driver(object):
         self.carModel = carModel.replace('\t', '')
         self.officeid = officeid
         self.next = None
+
+class apu:
+
+    def __init__(self):
+        self.answer = None
 
 
 class Travel(object):
@@ -69,21 +73,14 @@ class Node(object):
 
     def find(self, nimi):
         if self.data.name == nimi:
-            print(self.data.name)
-            return self.data
+            apu.answer = self.data
         else:
-            print(self.data.name)
             if self.left and self.right is not None:
-                time.sleep(1/4)
-                return self.right.find(nimi), self.left.find(nimi)
+                self.right.find(nimi), self.left.find(nimi)
             elif self.right is not None:
-                time.sleep(1 / 4)
-                return self.right.find(nimi)
+                self.right.find(nimi)
             elif self.left is not None:
-                time.sleep(1 / 4)
-                return self.left.find(nimi)
-            else:
-                return False
+                self.left.find(nimi)
 
 class Tree:
 
@@ -211,11 +208,13 @@ class Customers(object):
 
 
     def findByName(self, nimi, c):
-        c = c.find(nimi)
-        if c is False:
+        c.find(nimi)
+        if apu.answer is None:
             return None
         else:
-            print(c)
+            return apu.answer
+
+
 
 class Drivers(object):
     def __init__(self):
@@ -267,10 +266,12 @@ class Drivers(object):
         if c is None:
             return False
 
-    def findByName(self, name, tree1):
-        #c = tree1.root
-        #while c is not None:
-        pass
+    def findByName(self, c, nimi):
+        c.find(nimi)
+        if apu.answer is None:
+            return None
+        else:
+            return apu.answer
 
 
 class Travels(object):
