@@ -1,5 +1,5 @@
 import time
-from Classes import Agency, Agencies, Customer, Customers, Drivers, Driver, Travels, Travel
+from Classes import Agency, Agencies, Customer, Customers, Drivers, Driver, Travels, Travel, Node
 
 def alustus(): #saadaan siististi globaaleja muuttujia
     tr = Travels()
@@ -149,7 +149,7 @@ def menu():
                 else:
                     if action6 == 1:
                         nimi6 = input('Syötä asiakkaan nimi:').strip()
-                        data = cu.findByName(nimi6, tree.root)
+                        data = cu.findByName(nimi6, tree)
                         if data is None:
                             print('Nimellä ei löytynyt asiakasta')
                         else:

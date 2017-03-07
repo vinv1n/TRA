@@ -1,7 +1,7 @@
 import os
 import os.path
 import datetime, time
-from operator import attrgetter, itemgetter
+from operator import attrgetter
 
 
 class Customer(object):
@@ -49,6 +49,7 @@ class Agency(object):
 class Node(object):
 
     def __init__(self, id, data):
+        self.parent = None
         self.left = None    #noden vasen solmu
         self.right = None   #noden oikea solmu
         self.id = id        #noden key joka tässä id
@@ -66,6 +67,24 @@ class Node(object):
             else:
                 self.right = Node(id, data)
 
+    def find(self, nimi):
+        if self.data.name == nimi:
+            print(self.data.name)
+            return self.data
+        else:
+            print(self.data.name)
+            if self.left is not None:
+                if self.right is not None:
+                    return self.left.find(nimi), self.right.find(nimi)
+                else:
+                    return self.left.find(nimi)
+            elif self.right is not None:
+                if self.left is not None:
+                    return self.left.find(nimi), self.right.find(nimi)
+                else:
+                    return self.right.find(nimi)
+            else:
+                return False
 
 class Tree:
 
@@ -77,6 +96,12 @@ class Tree:
             self.root.insert(id, data)
         else:
             self.root = Node(id, data)
+
+    def find(self, nimi):
+        if self.root:
+            return self.root.find(nimi)
+        else:
+            return False
 
 # Agencies Linked List.
 # Modify or implement accordingly
@@ -187,17 +212,12 @@ class Customers(object):
 
 
     def findByName(self, nimi, c):
-        while c is not None:
-            if c.data.name == nimi:
-                print('oikea!')
-                time.sleep(2)
-                self.answer = c.data
-            else:
-                self.findByName(nimi, c.left)
-                self.findByName(nimi, c.right)
-
-
-
+        print('mustamies')
+        d, c = c.find(nimi)
+        if d is True:
+            print('!!!')
+        elif d is False:
+            pass
 
 class Drivers(object):
     def __init__(self):
@@ -273,10 +293,10 @@ class Travels(object):
                 if len(lineparts) is not 8:         #tapaus, jossa aijan ja päivämäärän välillä ei tabiä
                     s = (lineparts[2]).split(' ')   # muokataan listasta luettava poistamalla väli, koska ajan ja päivän välissä space eikä tabi
                     lineparts.pop(2)
-                    kiki = s[0]
-                    nakki = s[1]
-                    lineparts.insert(2, kiki)
-                    lineparts.insert(3, nakki)
+                    part1 = s[0]
+                    part2 = s[1]
+                    lineparts.insert(2, part1)
+                    lineparts.insert(3, part2)
                     if self.head is None:
                         self.head = Travel(id=int(lineparts[0]), driverId=int(lineparts[1]), date=lineparts[2],
                                            time=lineparts[3],
@@ -377,7 +397,7 @@ class Travels(object):
         f.close()
 
 
-    def add(self, list1, action4, tri, kohde): #pidetään muuttujat samana, koska helpoompi muistaa
+    def add(self, list1, action4, tri, kohde): #pidetään muuttujat samana, koska helpompi muistaa
         if action4 == 1:
             for p in range(len(list1)):
                 if list1[p].id == tri:
