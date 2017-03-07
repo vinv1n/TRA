@@ -71,7 +71,7 @@ class Node(object):
             else:
                 self.right = Node(id, data)
 
-    def find(self, nimi):
+    def find(self, nimi):           #rekursiivinen haku ilman key:tä
         if self.data.name == nimi:
             apu.answer = self.data
         else:
@@ -207,12 +207,13 @@ class Customers(object):
 
 
 
-    def findByName(self, nimi, c):
+    def findByName(self, nimi, c):  #haetaan asiakasta nimen perusteella
+        apu.answer = None           #asetetaan apu classin arvo noneksi, jotta voidaan hakea useamman kerran + eikä virheellinen syöte sekoita
         c.find(nimi)
-        if apu.answer is None:
-            return None
-        else:
+        if apu.answer:
             return apu.answer
+        else:
+            return None
 
 
 
@@ -268,6 +269,7 @@ class Drivers(object):
 
     def findByName(self, c, nimi):
         c.find(nimi)
+        print(apu.answer)
         if apu.answer is None:
             return None
         else:

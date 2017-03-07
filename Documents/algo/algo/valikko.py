@@ -149,11 +149,11 @@ def menu():
                 else:
                     if action6 == 1:
                         nimi6 = input('Syötä asiakkaan nimi:').strip()
-                        data = cu.findByName(nimi6, tree)
-                        if data is None:
+                        data66 = cu.findByName(nimi6, tree)
+                        if data66 is None:
                             print('Nimellä ei löytynyt asiakasta')
                         else:
-                            print(data.id, data.name, data.address, data.phone)
+                            print(data66.id, data66.name, data66.address, data66.phone)
                     elif action6 == 2:
                         try:
                             id2 = int(input('Syötä asiakkaan id:').strip())
