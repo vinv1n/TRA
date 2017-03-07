@@ -268,12 +268,12 @@ class Drivers(object):
             return False
 
     def findByName(self, c, nimi):
+        apu.answer = None  # sama funktio kutsu kuin aiemmin
         c.find(nimi)
-        print(apu.answer)
-        if apu.answer is None:
-            return None
-        else:
+        if apu.answer:
             return apu.answer
+        else:
+            return None
 
 
 class Travels(object):
@@ -287,7 +287,6 @@ class Travels(object):
 
         f = open('travels.txt', 'r')
         c = None
-        list1 = []
         for line in f.readlines():
             lineparts = line.replace('\n', '').split('\t')
             if len(lineparts) > 1:
