@@ -73,16 +73,15 @@ class Node(object):
             return self.data
         else:
             print(self.data.name)
-            if self.left is not None:
-                if self.right is not None:
-                    return self.left.find(nimi), self.right.find(nimi)
-                else:
-                    return self.left.find(nimi)
+            if self.left and self.right is not None:
+                time.sleep(1/4)
+                return self.right.find(nimi), self.left.find(nimi)
             elif self.right is not None:
-                if self.left is not None:
-                    return self.left.find(nimi), self.right.find(nimi)
-                else:
-                    return self.right.find(nimi)
+                time.sleep(1 / 4)
+                return self.right.find(nimi)
+            elif self.left is not None:
+                time.sleep(1 / 4)
+                return self.left.find(nimi)
             else:
                 return False
 
@@ -212,12 +211,11 @@ class Customers(object):
 
 
     def findByName(self, nimi, c):
-        print('mustamies')
-        d, c = c.find(nimi)
-        if d is True:
-            print('!!!')
-        elif d is False:
-            pass
+        c = c.find(nimi)
+        if c is False:
+            return None
+        else:
+            print(c)
 
 class Drivers(object):
     def __init__(self):
